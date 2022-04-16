@@ -131,7 +131,7 @@ def parse_args(args):
             +"with the same configuration. No checking is done to ensure requests "
             +"are within queue limits."
         ),
-        epilog="e.g. %(prog)s -q normal -n 4 -m 60GB -t 3:00:00",
+        epilog="e.g. qcost -q normal -n 4 -m 60GB -t 3:00:00 or qcost -f job.sh",
     )
     parser.add_argument("-q", "--queue", help="PBS queue", default=None)
     parser.add_argument("--abs_dir", default="./",help=argparse.SUPPRESS)

@@ -1,0 +1,29 @@
+while getopts 'n:t:P:' flag; do
+     case "${flag}" in
+            n) gpus=${OPTARG} ;;
+            t) time=${OPTARG} ;;
+            P) proj=${OPTARG} ;;
+            *) echo invalid flag -$flag; exit 1 ;;
+    esac
+done
+if [ -z $proj ];
+then
+    echo "1st arg not provided for proj. Set default $PROJECT"
+    proj=$PROJECT
+fi
+
+if [ -z $gpus ];
+then
+    gpus=1
+    echo "2st arg not provided for gpus. Set default 1"
+fi
+
+if [ -z $time ];
+then
+    time=00:40:00
+    echo No -t. Default length: $time
+fi
+echo run on project $proj
+echo gpus: $gpus
+echo qsub -I -qgpuvolta -lwalltime=${time},ncpus=$(expr $gpus \* 12),ngpus=$gpus,mem=64GB,wd
+qsub -I -qgpuvolta -lwalltime=${time},ncpus=$(expr $gpus \* 12),ngpus=$gpus,mem=64GB,wd

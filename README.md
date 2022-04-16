@@ -1,6 +1,11 @@
 # nci_tools
 Some code are directly modified from https://github.com/coecms/nci_scripts
 
+## Environment
+* pandas
+* python-dateutils
+* pymunge
+
 ## Usage
 1. Clone this repo to your home dir.
 2. In `~/.bashrc` add `export PATH="~/nci_tools:$PATH"`

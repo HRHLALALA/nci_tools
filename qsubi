@@ -25,5 +25,5 @@ then
 fi
 echo run on project $proj
 echo gpus: $gpus
-echo qsub -I -qgpuvolta -lwalltime=${time},ncpus=$(expr $gpus \* 12),ngpus=$gpus,mem=64GB,wd
-qsub -I -qgpuvolta -lwalltime=${time},ncpus=$(expr $gpus \* 12),ngpus=$gpus,mem=64GB,wd
+echo qsub -I -qgpuvolta -P $proj -lwalltime=${time},ncpus=$(expr $gpus \* 12),ngpus=$gpus,mem=64GB,wd
+qsub -I -qgpuvolta -P $proj -lwalltime=${time},ncpus=$(expr $gpus \* 12),ngpus=$gpus,mem=64GB,wd

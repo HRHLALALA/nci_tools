@@ -1,5 +1,5 @@
 # nci_tools
-Code are modified from https://github.com/coecms/nci_scripts
+Some code are directly modified from https://github.com/coecms/nci_scripts
 
 ## Usage
 1. Clone this repo to your home dir.

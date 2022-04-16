@@ -1,0 +1,1 @@
+~/nci_tools/python-analysis3 ~/nci_tools/qcost.py $@ --abs_dir $PWD

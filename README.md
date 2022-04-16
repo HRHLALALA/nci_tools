@@ -6,7 +6,7 @@ Some code are directly modified from https://github.com/coecms/nci_scripts
 2. In `~/.bashrc` add `export PATH="~/nci_tools:$PATH"`
 3. `source ~/.bashrc`
 
-**You can also modify `python-analysis3` to your mostly used python environment.**
+**You can also modify `python-analysis3` into your mostly used python environment.**
 
 ## Command `qcost`
 ```

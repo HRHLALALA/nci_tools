@@ -30,6 +30,8 @@ We also add `-f` to anlyse job file "job.sh"
 
 e.g.: `qcost -f job.sh`
 
+Note that we assume the `PBS_NCI_NCPUS_PER_NODE` to be 48. Therefore, the cost dominated by memory is not the same as the original one. For info: https://opus.nci.org.au/display/Help/2.2+Job+Cost+Examples
+
 ## Command `uqstat`
 ```
 $ uqstat

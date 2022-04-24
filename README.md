@@ -75,12 +75,20 @@ args=${args//|/ }
 
 ## Command `qsub_all`
 
-e.g. Given a file say job_list.txt in current dir, we qsub_all to run all commands in this file.
+e.g. Given a file say job_list.txt in current dir, `qsub_all` reads each line and run each command in this file.
 ```
 qsub_all -f $PWD/job_list.txt
 ```
 
-This command can be used with the **job.sh** file created by `create_job` command because we can read $args from it
+This command can be used with the **job.sh** file created by `create_job` command since we can pass environment $args from it
+
+Example `job_list.txt`:
+```
+qsub job.sh -v args="--name=effnet|--dataset_name=imagenet|-dataset_root=$PBS_JOBFS/imagenet"
+qsub job.sh -v args="--name=effnet|--dataset_name=cifar10|-dataset_root=$PBS_JOBFS/cifar10"
+qsub job.sh -v args="--name=effnet|--dataset_name=cifar100|-dataset_root=$PBS_JOBFS/cifar100"
+```
+
 
 **Note**: please use absolute path for `-f`
 

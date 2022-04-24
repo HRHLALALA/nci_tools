@@ -1,0 +1,92 @@
+while getopts 'n:t:P:l:q:d:' flag; do
+     case "${flag}" in
+            n) gpus=${OPTARG} ;;
+            t) time=${OPTARG} ;;
+            P) proj=${OPTARG} ;;
+	    l) largs=${OPTARG} ;;
+	    q) queue=${OPTARG} ;;
+            d) dir=${OPTARG} ;;
+            *) echo invalid flag -$flag; exit 1 ;;
+    esac
+done
+
+if [ -z $dir ];
+then
+    echo "store in current dir"
+    dir=$PWD
+fi
+
+
+if [ -z $proj ];
+then
+    echo "#1st arg not provided for proj. Set default $PROJECT"
+    proj=$PROJECT
+fi
+
+if [ -z $gpus ];
+then
+    gpus=1
+    echo "#2st arg not provided for gpus. Set default 1"
+fi
+
+if [ -z $time ];
+then
+    time=00:40:00
+    echo No -t. Default length: $time
+fi
+
+if [ -z $largs ];
+then
+    echo no args
+    largs=""
+else
+    largs=",${largs}"
+fi
+
+if [ -z $queue ];
+then
+    echo No Queue type. Use default gpuvolta
+    queue="gpuvolta"
+fi
+
+if [ "$queue" != "gpuvolta" ];
+then
+	echo play non-gpu jobs
+	gpus=0
+	ncpus=1
+else
+	ncpus=$(expr $gpus \* 12)
+fi
+
+if test -f "$dir/job.sh"; then
+   while true; do
+   read -p "$dir/job.sh exists. Do you want to overwrite it? (y/n)" yn
+   case $yn in
+	[nN] ) echo exit; exit;;
+	[yY] ) break;;
+	* ) echo invalid respnse;;
+   esac
+   done
+fi
+
+echo write to $dir/job.sh
+
+{
+echo "#PBS -P $proj"
+echo "#PBS -q $queue"
+echo "#PBS -l ncpus=${ncpus}"
+echo "#PBS -l mem=64GB"
+echo "#PBS -l ngpus=$gpus"
+echo "#PBS -l storage=scratch/sz65"
+echo "#PBS -l walltime=${time}"
+
+for i in ${largs//,/ }
+do 
+	echo "#PBS -l $i"
+done
+
+echo "cd $dir"
+} >> $dir/job.sh
+
+echo done!
+

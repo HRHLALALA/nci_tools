@@ -14,5 +14,6 @@ if [ -z ${file_path} ]; then
 fi
 while IFS= read -r line
 do
+  echo ${line}
   ${line}
 done < $file_path

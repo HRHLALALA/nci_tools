@@ -85,7 +85,7 @@ for i in ${largs//,/ }
 do 
 	echo "#PBS -l $i"
 done
-
+echo 'args=$(echo ${args}| envsubst)'
 echo 'args=${args//|/ }'
 echo 'echo $args'
 echo "cd $dir"

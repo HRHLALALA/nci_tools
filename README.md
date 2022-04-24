@@ -84,12 +84,12 @@ This command can be used with the **job.sh** file created by `create_job` comman
 
 Example `job_list.txt`:
 ```
-qsub job.sh -v args="--name=effnet|--dataset_name=imagenet|-dataset_root=$PBS_JOBFS/imagenet"
-qsub job.sh -v args="--name=effnet|--dataset_name=cifar10|-dataset_root=$PBS_JOBFS/cifar10"
-qsub job.sh -v args="--name=effnet|--dataset_name=cifar100|-dataset_root=$PBS_JOBFS/cifar100"
+qsub -v args='--name=effnet|--dataset_name=imagenet|-dataset_root=$PBS_JOBFS/imagenet' job.sh
+qsub -v args='--name=effnet|--dataset_name=cifar10|-dataset_root=$PBS_JOBFS/cifar10' job.sh
+qsub -v args='--name=effnet|--dataset_name=cifar100|-dataset_root=$PBS_JOBFS/cifar100' job.sh
 ```
 
 
-**Note**: please use absolute path for `-f`
+**Note**: please use absolute path for `-f`.
 
 

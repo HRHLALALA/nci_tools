@@ -1,0 +1,18 @@
+while getopts 'f:h' flag; do
+     case "${flag}" in
+            f) file_path=${OPTARG} ;;
+#            a) args=${OPTARG};;
+#            s) sep='true'
+            h) echo Help: Read a file with 'qsub' commands each line. E.g. qsub_all -f job_lists.txt;exit ;;
+            *) echo invalid flag -$flag; exit 1 ;;
+    esac
+done
+
+if [ -z ${file_path} ]; then
+    echo A file is needed
+    exit 1
+fi
+while IFS= read -r line
+do
+  ${line}
+done < $file_path

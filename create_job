@@ -63,7 +63,7 @@ if test -f "$dir/job.sh"; then
    read -p "$dir/job.sh exists. Do you want to overwrite it? (y/n)" yn
    case $yn in
 	[nN] ) echo exit; exit;;
-	[yY] ) break;;
+	[yY] ) rm $dir/job.sh; break;;
 	* ) echo invalid respnse;;
    esac
    done
@@ -72,11 +72,12 @@ fi
 echo write to $dir/job.sh
 
 {
+echo '#!/bin/bash'
 echo "#PBS -P $proj"
 echo "#PBS -q $queue"
 echo "#PBS -l ncpus=${ncpus}"
-echo "#PBS -l mem=64GB"
 echo "#PBS -l ngpus=$gpus"
+echo "#PBS -l mem=64GB"
 echo "#PBS -l storage=scratch/sz65"
 echo "#PBS -l walltime=${time}"
 
@@ -85,8 +86,10 @@ do
 	echo "#PBS -l $i"
 done
 
+echo 'args=${args//|/ }'
+echo 'echo $args'
 echo "cd $dir"
+
 } >> $dir/job.sh
 
 echo done!
-

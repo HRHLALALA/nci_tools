@@ -81,6 +81,7 @@ qsub_all -f $PWD/job_list.txt
 ```
 
 This command can be used with the **job.sh** file created by `create_job` command because we can read $args from it
+
 **Note**: please use absolute path for `-f`
 
 

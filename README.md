@@ -50,5 +50,46 @@ $ uqstat
 Alias a long command for an interactive job `qsub -I -qgpuvolta -P ${PROJECT} -lwalltime=${walltime},ncpus=$((ngpus * 12)),ngpus=${ngpus},mem=64GB,wd`
 e.g.
 ```
-qsubi -P ${PROJECT} -t ${walltime} -n ${ngpus}
+qsubi -P ${PROJECT} -q ${queue} -t ${walltime} -n ${ngpus} -l ${all other arguments for -l flags}
 ```
+
+## Command `create_job`
+
+e.g. Given the same flags as `qsubi`, create a **job.sh** template in `-d`
+```
+create_job -d $PWD/job.sh -q ${queue} -t ${walltime} -n ${ngpus} -l ${all other arguments for -l flags}
+```
+In `$PWD/job.sh`
+```
+#PBS -P jk87
+#PBS -q gpuvolta
+#PBS -l ncpus=12
+#PBS -l mem=64GB
+#PBS -l ngpus=1
+#PBS -l storage=scratch/sz65
+#PBS -l walltime=00:40:00
+#PBS -l jobfs=100GB
+args=${args//|/ }
+```
+**Note**: please use absolute path for `-d`, e.g. `$PWD/job.sh`
+
+## Command `qsub_all`
+
+e.g. Given a file say job_list.txt in current dir, `qsub_all` reads each line and run each command in this file.
+```
+qsub_all -f $PWD/job_list.txt
+```
+
+This command can be used with the **job.sh** file created by `create_job` command since we can pass environment $args from it
+
+Example `job_list.txt`:
+```
+qsub -v args='--name=effnet|--dataset_name=imagenet|-dataset_root=$PBS_JOBFS/imagenet' job.sh
+qsub -v args='--name=effnet|--dataset_name=cifar10|-dataset_root=$PBS_JOBFS/cifar10' job.sh
+qsub -v args='--name=effnet|--dataset_name=cifar100|-dataset_root=$PBS_JOBFS/cifar100' job.sh
+```
+
+
+**Note**: please use absolute path for `-f`.
+
+

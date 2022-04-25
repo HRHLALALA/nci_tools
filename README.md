@@ -61,14 +61,16 @@ create_job -d $PWD/job.sh -q ${queue} -t ${walltime} -n ${ngpus} -l ${all other 
 ```
 In `$PWD/job.sh`
 ```
-#PBS -P jk87
+#!/bin/bash
+#PBS -P {your project id}
 #PBS -q gpuvolta
 #PBS -l ncpus=12
 #PBS -l mem=64GB
 #PBS -l ngpus=1
-#PBS -l storage=scratch/sz65
+#PBS -l storage=scratch/{the fold you want to mount}
 #PBS -l walltime=00:40:00
 #PBS -l jobfs=100GB
+args=$(echo ${args}| envsubst)
 args=${args//|/ }
 ```
 **Note**: please use absolute path for `-d`, e.g. `$PWD/job.sh`
